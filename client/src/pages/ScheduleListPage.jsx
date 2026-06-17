@@ -16,17 +16,19 @@ const initialForm = {
   notes: '',
 };
 
+// Schedule list — view, create, edit, and delete recurring maintenance schedules
 export default function ScheduleListPage() {
   const [schedules, setSchedules] = useState([]);
   const [machines, setMachines] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [editingId, setEditingId] = useState(null);
+  const [showForm, setShowForm] = useState(false);  // toggle inline add/edit form
+  const [editingId, setEditingId] = useState(null);  // null = creating, string = editing
   const [form, setForm] = useState(initialForm);
   const [saving, setSaving] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
 
+  // Fetch both schedules and machines list on mount
   const fetchSchedules = useCallback(async () => {
     setLoading(true);
     try {
@@ -63,6 +65,7 @@ export default function ScheduleListPage() {
     setShowForm(false);
   };
 
+  // Populate form with existing schedule data for editing
   const handleEdit = (schedule) => {
     setForm({
       machine: schedule.machine?._id || '',
@@ -77,6 +80,7 @@ export default function ScheduleListPage() {
     setShowForm(true);
   };
 
+  // On submit: create or update schedule depending on editingId
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);

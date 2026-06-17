@@ -26,15 +26,17 @@ const STATUS_OPTIONS = [
   { value: 'Offline', label: 'Offline' },
 ];
 
+// Machine list — search, filter, view, edit, and delete machines
 export default function MachineListPage() {
   const [machines, setMachines] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [department, setDepartment] = useState('');
-  const [status, setStatus] = useState('');
+  const [search, setSearch] = useState('');           // search term (machine ID)
+  const [department, setDepartment] = useState('');   // department filter
+  const [status, setStatus] = useState('');           // status filter
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [selectedMachine, setSelectedMachine] = useState(null);
 
+  // Fetch machines with optional search/filter query params
   const fetchMachines = useCallback(async () => {
     setLoading(true);
     try {
@@ -60,6 +62,7 @@ export default function MachineListPage() {
     setShowDeleteConfirm(true);
   };
 
+  // Confirm dialog accepted: delete the selected machine, then refresh
   const handleDeleteConfirm = async () => {
     if (!selectedMachine) return;
     try {

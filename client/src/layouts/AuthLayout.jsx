@@ -1,3 +1,5 @@
+// Wraps login/register pages with a centered card layout and app branding
+
 const AuthLayout = ({ children }) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">

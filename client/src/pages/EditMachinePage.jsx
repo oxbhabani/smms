@@ -5,13 +5,15 @@ import { getMachine, updateMachine } from '../services/api';
 import MainLayout from '../layouts/MainLayout';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+// Edit Machine — load existing machine data, then update it
 export default function EditMachinePage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [form, setForm] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState(null);    // starts null until data loads
+  const [loading, setLoading] = useState(true);  // loading initial machine data
+  const [saving, setSaving] = useState(false);   // disables submit during update
 
+  // On mount: fetch machine by ID from URL, populate form fields
   useEffect(() => {
     const fetchMachine = async () => {
       try {
@@ -41,6 +43,7 @@ export default function EditMachinePage() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // On submit: update machine via API, show toast, redirect to list
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);

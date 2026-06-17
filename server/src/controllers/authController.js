@@ -1,6 +1,11 @@
+// Handles authentication (register, login, get current user)
+
 const authValidator = require('../validators/authValidator');
 const authService = require('../services/authService');
 
+// @desc   Register a new user
+// @route  POST /api/auth/register
+// @access Public
 const register = async (req, res) => {
   try {
     const { errors } = authValidator.validateRegister(req.body);
@@ -14,6 +19,9 @@ const register = async (req, res) => {
   }
 };
 
+// @desc   Log in an existing user
+// @route  POST /api/auth/login
+// @access Public
 const login = async (req, res) => {
   try {
     const { errors } = authValidator.validateLogin(req.body);
@@ -27,6 +35,9 @@ const login = async (req, res) => {
   }
 };
 
+// @desc   Get the currently logged-in user's profile
+// @route  GET /api/auth/me
+// @access Private
 const getMe = async (req, res) => {
   try {
     const user = await authService.getMe(req.user.id);

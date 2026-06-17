@@ -1,5 +1,7 @@
+// Validation helpers for schedule routes — validates maintenance schedule fields
 const VALID_MAINTENANCE_TYPES = ['Preventive', 'Predictive', 'Condition-Based', 'Corrective'];
 
+// Validates all required fields when creating a new maintenance schedule
 const validateCreateSchedule = ({ machine, maintenanceType, frequencyDays, nextMaintenanceDate, notes }) => {
   const errors = [];
 
@@ -27,6 +29,7 @@ const validateCreateSchedule = ({ machine, maintenanceType, frequencyDays, nextM
     errors.push({ field: 'nextMaintenanceDate', message: 'Next maintenance date must be a valid date' });
   }
 
+  // Notes are optional
   if (notes !== undefined && notes !== null && notes !== '') {
     if (typeof notes !== 'string') {
       errors.push({ field: 'notes', message: 'Notes must be a string' });
@@ -36,6 +39,7 @@ const validateCreateSchedule = ({ machine, maintenanceType, frequencyDays, nextM
   return { errors };
 };
 
+// Validates fields for updating a schedule — all fields are optional
 const validateUpdateSchedule = ({ machine, maintenanceType, frequencyDays, nextMaintenanceDate, notes }) => {
   const errors = [];
 

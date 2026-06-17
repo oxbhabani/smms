@@ -1,3 +1,5 @@
+// Main app layout with sidebar navigation, top navbar, and content area
+
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -6,6 +8,7 @@ import {
   FiHome, FiTool, FiCalendar, FiClipboard, FiClock, FiActivity, FiBell
 } from 'react-icons/fi';
 
+// Reusable sidebar link item — highlights when active
 const NavItem = ({ to, icon: Icon, label }) => (
   <NavLink
     to={to}
@@ -23,7 +26,7 @@ const NavItem = ({ to, icon: Icon, label }) => (
 );
 
 const MainLayout = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Toggle sidebar on mobile
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -34,6 +37,8 @@ const MainLayout = ({ children }) => {
 
   return (
     <div className="flex h-screen bg-gray-50">
+
+      {/* Overlay backdrop when sidebar is open on mobile */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-20 lg:hidden"
@@ -41,6 +46,7 @@ const MainLayout = ({ children }) => {
         />
       )}
 
+      {/* Sidebar — hidden off-screen on mobile, always visible on desktop */}
       <aside
         className={`fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white border-r border-gray-200 transform transition-transform duration-200 ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
@@ -60,7 +66,10 @@ const MainLayout = ({ children }) => {
         </nav>
       </aside>
 
+      {/* Main content area */}
       <div className="flex-1 flex flex-col min-w-0">
+
+        {/* Top navbar with hamburger menu and user info */}
         <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-6">
           <button
             onClick={() => setIsSidebarOpen(true)}
@@ -81,6 +90,7 @@ const MainLayout = ({ children }) => {
           </div>
         </header>
 
+        {/* Page content rendered here */}
         <main className="flex-1 overflow-auto p-4 lg:p-6">
           {children}
         </main>

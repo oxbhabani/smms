@@ -1,9 +1,13 @@
+// Axios instance with base URL and interceptors for API calls
+
 import axios from 'axios';
 
+// Create an Axios instance that points to our backend API
 const api = axios.create({
   baseURL: '/api',
 });
 
+// Attach the auth token to every outgoing request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -12,6 +16,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Handle 401 errors globally — clear token and redirect to login
 api.interceptors.response.use(
   (response) => response,
   (error) => {

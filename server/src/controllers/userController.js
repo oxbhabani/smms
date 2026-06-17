@@ -1,5 +1,10 @@
+// Handles user-related queries
+
 const userService = require('../services/userService');
 
+// @desc   Get all users (optionally filtered by role)
+// @route  GET /api/users
+// @access Private
 const getUsers = async (req, res) => {
   try {
     const { role } = req.query;

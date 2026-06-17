@@ -1,3 +1,5 @@
+// Root app component — renders the route tree
+
 import AppRoutes from './routes/AppRoutes';
 
 const App = () => {

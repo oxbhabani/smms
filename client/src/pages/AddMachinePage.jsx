@@ -13,15 +13,17 @@ const initialForm = {
   status: 'Running',
 };
 
+// Add Machine — form to register a new machine in the system
 export default function AddMachinePage() {
   const navigate = useNavigate();
-  const [form, setForm] = useState(initialForm);
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState(initialForm);  // tracks all machine form fields
+  const [loading, setLoading] = useState(false);   // disables submit during API call
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // On submit: create machine via API, show success toast, redirect to list
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

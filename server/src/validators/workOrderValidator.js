@@ -1,5 +1,7 @@
+// Validation helpers for work order routes — ensures valid fields before DB operations
 const VALID_PRIORITIES = ['Low', 'Medium', 'High', 'Critical'];
 
+// Validates all required fields when creating a new work order
 const validateCreateWorkOrder = ({ title, description, machine, priority, assignedTo }) => {
   const errors = [];
 
@@ -15,12 +17,14 @@ const validateCreateWorkOrder = ({ title, description, machine, priority, assign
     errors.push({ field: 'machine', message: 'Machine is required' });
   }
 
+  // Priority is optional on create — defaults handled elsewhere
   if (priority !== undefined && priority !== null && priority !== '') {
     if (!VALID_PRIORITIES.includes(priority)) {
       errors.push({ field: 'priority', message: `Priority must be one of: ${VALID_PRIORITIES.join(', ')}` });
     }
   }
 
+  // AssignedTo is optional
   if (assignedTo !== undefined && assignedTo !== null && assignedTo !== '') {
     if (typeof assignedTo !== 'string') {
       errors.push({ field: 'assignedTo', message: 'Assigned to must be a string' });
@@ -30,6 +34,7 @@ const validateCreateWorkOrder = ({ title, description, machine, priority, assign
   return { errors };
 };
 
+// Validates fields for updating a work order — all fields are optional
 const validateUpdateWorkOrder = ({ title, description, machine, priority, assignedTo }) => {
   const errors = [];
 

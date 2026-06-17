@@ -1,3 +1,5 @@
+// Manages authentication state (user, login, register, logout) across the app
+
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { loginApi, registerApi, getMeApi } from '../services/api';
 
@@ -8,6 +10,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // On mount, check if a token exists and verify it with the server
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -24,6 +27,7 @@ export function AuthProvider({ children }) {
       .finally(() => setLoading(false));
   }, []);
 
+  // Login: send credentials, save token, set user
   const login = useCallback(async (email, password) => {
     setError(null);
     try {
@@ -39,6 +43,7 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  // Register: create account, save token, set user
   const register = useCallback(async (name, email, password, role) => {
     setError(null);
     try {
@@ -54,16 +59,19 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  // Logout: clear token and user
   const logout = useCallback(() => {
     localStorage.removeItem('token');
     setUser(null);
     setError(null);
   }, []);
 
+  // Update local user data (e.g. after profile edit)
   const updateUser = useCallback((userData) => {
     setUser(userData);
   }, []);
 
+  // Provide auth state and actions to all children
   return (
     <AuthContext.Provider value={{ user, loading, error, login, register, logout, updateUser }}>
       {children}
@@ -71,6 +79,7 @@ export function AuthProvider({ children }) {
   );
 }
 
+// Hook to access auth context (must be used inside AuthProvider)
 export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) {

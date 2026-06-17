@@ -4,9 +4,11 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import AuthLayout from '../layouts/AuthLayout';
 
+// Registration page — creates a new user account with name, email, password, and role
 export default function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
+  // form: holds name, email, password, and role fields; role defaults to Technician
   const [form, setForm] = useState({ name: '', email: '', password: '', role: 'Technician' });
   const [loading, setLoading] = useState(false);
 
@@ -14,6 +16,7 @@ export default function RegisterPage() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // On submit: register via auth context, then navigate to dashboard
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

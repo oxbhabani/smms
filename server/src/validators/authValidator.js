@@ -1,3 +1,4 @@
+// Validation helpers for auth routes — returns error array or empty on success
 const validateRegister = ({ name, email, password, role }) => {
   const errors = [];
 
@@ -17,6 +18,7 @@ const validateRegister = ({ name, email, password, role }) => {
     errors.push({ field: 'password', message: 'Password must be at least 6 characters' });
   }
 
+  // Role is optional — only validate if provided
   if (role !== undefined && role !== null && role !== '') {
     if (!['Admin', 'Technician'].includes(role)) {
       errors.push({ field: 'role', message: 'Role must be either Admin or Technician' });
@@ -26,6 +28,7 @@ const validateRegister = ({ name, email, password, role }) => {
   return { errors };
 };
 
+// Validates login fields: email (required, format) and password (required)
 const validateLogin = ({ email, password }) => {
   const errors = [];
 

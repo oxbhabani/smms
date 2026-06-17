@@ -1,6 +1,11 @@
+// Handles schedule CRUD operations
+
 const scheduleValidator = require('../validators/scheduleValidator');
 const scheduleService = require('../services/scheduleService');
 
+// @desc   Create a new schedule
+// @route  POST /api/schedules
+// @access Private/Admin
 const createSchedule = async (req, res) => {
   try {
     const { errors } = scheduleValidator.validateCreateSchedule(req.body);
@@ -14,6 +19,9 @@ const createSchedule = async (req, res) => {
   }
 };
 
+// @desc   Update an existing schedule
+// @route  PUT /api/schedules/:id
+// @access Private/Admin
 const updateSchedule = async (req, res) => {
   try {
     const { errors } = scheduleValidator.validateUpdateSchedule(req.body);
@@ -27,6 +35,9 @@ const updateSchedule = async (req, res) => {
   }
 };
 
+// @desc   Get all schedules
+// @route  GET /api/schedules
+// @access Private
 const getSchedules = async (req, res) => {
   try {
     const schedules = await scheduleService.getSchedules();
@@ -36,6 +47,9 @@ const getSchedules = async (req, res) => {
   }
 };
 
+// @desc   Delete a schedule
+// @route  DELETE /api/schedules/:id
+// @access Private/Admin
 const deleteSchedule = async (req, res) => {
   try {
     const schedule = await scheduleService.deleteSchedule(req.params.id, req.user.id);

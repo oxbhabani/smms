@@ -1,7 +1,10 @@
+// Modal confirmation dialog for destructive or important actions
 export default function ConfirmDialog({ isOpen, title, message, onConfirm, onCancel }) {
+  // Don't render anything when the dialog is closed
   if (!isOpen) return null;
 
   return (
+    // Semi-transparent backdrop covering the whole screen
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>

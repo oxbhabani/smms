@@ -4,9 +4,11 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import AuthLayout from '../layouts/AuthLayout';
 
+// Login page — email/password form that authenticates the user
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  // form: tracks email/password inputs; loading: disables button during API call
   const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
 
@@ -14,6 +16,7 @@ export default function LoginPage() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // On submit: call login API, show toast, redirect to dashboard
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

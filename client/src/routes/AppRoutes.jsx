@@ -1,3 +1,5 @@
+// Defines all app routes with protection (auth required) and public-only access
+
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import LoginPage from '../pages/LoginPage';
@@ -14,6 +16,7 @@ import HistoryPage from '../pages/HistoryPage';
 import LogsPage from '../pages/LogsPage';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+// Redirects unauthenticated users to login; shows spinner while checking auth
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
@@ -32,6 +35,7 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+// Redirects already-authenticated users to dashboard; shows spinner while checking
 const PublicRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
@@ -53,6 +57,8 @@ const PublicRoute = ({ children }) => {
 const AppRoutes = () => {
   return (
     <Routes>
+
+      {/* Public pages — only accessible when logged out */}
       <Route
         path="/login"
         element={
@@ -69,6 +75,8 @@ const AppRoutes = () => {
           </PublicRoute>
         }
       />
+
+      {/* Protected pages — require authentication */}
       <Route
         path="/dashboard"
         element={
@@ -77,6 +85,8 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+
+      {/* Machines */}
       <Route
         path="/machines"
         element={
@@ -101,6 +111,8 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+
+      {/* Schedules */}
       <Route
         path="/schedules"
         element={
@@ -109,6 +121,8 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+
+      {/* Work Orders */}
       <Route
         path="/work-orders"
         element={
@@ -133,6 +147,8 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+
+      {/* History & Logs */}
       <Route
         path="/history"
         element={
@@ -149,6 +165,8 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+
+      {/* Fallback — redirect root and unknown paths to dashboard */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

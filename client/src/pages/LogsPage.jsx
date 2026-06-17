@@ -5,6 +5,7 @@ import DataTable from '../components/DataTable';
 
 const formatDate = (date) => (date ? new Date(date).toLocaleString() : '-');
 
+// Activity Logs — system-wide audit log of user actions
 export default function LogsPage() {
   const { data: logs, loading } = useFetch(() => getLogs());
 

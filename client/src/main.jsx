@@ -1,3 +1,5 @@
+// App entry point — sets up React, routing, auth, and toast notifications
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';

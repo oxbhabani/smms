@@ -9,6 +9,7 @@ import StatusBadge from '../components/StatusBadge';
 
 const formatDate = (date) => (date ? new Date(date).toLocaleDateString() : '-');
 
+// Work Order Detail — view full details, assign technician, update status
 export default function WorkOrderDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -21,11 +22,13 @@ export default function WorkOrderDetailPage() {
   const [assigning, setAssigning] = useState(false);
   const [updatingStatus, setUpdatingStatus] = useState(false);
 
+  // Only admins can assign; admins + assigned tech can update status
   const isAdmin = user?.role === 'Admin';
   const isAssignedTechnician =
     user?.role === 'Technician' && workOrder?.assignedTo?._id === user?._id;
   const canUpdateStatus = isAdmin || isAssignedTechnician;
 
+  // Load work order by ID from URL params
   const fetchWorkOrder = useCallback(async () => {
     setLoading(true);
     try {
@@ -42,6 +45,7 @@ export default function WorkOrderDetailPage() {
     }
   }, [id, navigate]);
 
+  // Load technician list only for admin assignment dropdown
   const fetchTechnicians = useCallback(async () => {
     try {
       const res = await getUsers({ role: 'Technician' });
@@ -53,9 +57,10 @@ export default function WorkOrderDetailPage() {
 
   useEffect(() => {
     fetchWorkOrder();
-    if (isAdmin) fetchTechnicians();
+    if (isAdmin) fetchTechnicians();  // only admins get the assignment panel
   }, [fetchWorkOrder, fetchTechnicians, isAdmin]);
 
+  // Assign a technician to this work order
   const handleAssign = async () => {
     if (!selectedTechnician) return;
     setAssigning(true);
@@ -70,6 +75,7 @@ export default function WorkOrderDetailPage() {
     }
   };
 
+  // Update status — available to both admin and assigned technician
   const handleUpdateStatus = async () => {
     if (!selectedStatus) return;
     setUpdatingStatus(true);

@@ -1,6 +1,8 @@
+// Dropdown select for filtering data by a category
 export default function FilterDropdown({ value, onChange, options = [], label }) {
   return (
     <div className="flex items-center gap-2">
+      {/* Show an optional label to the left of the dropdown */}
       {label && <label className="text-sm font-medium text-gray-700 whitespace-nowrap">{label}</label>}
       <select
         value={value}

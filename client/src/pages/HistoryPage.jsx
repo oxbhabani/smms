@@ -5,6 +5,7 @@ import DataTable from '../components/DataTable';
 
 const formatDate = (date) => (date ? new Date(date).toLocaleDateString() : '-');
 
+// Maintenance History — read-only list of completed maintenance records
 export default function HistoryPage() {
   const { data: history, loading } = useFetch(() => getHistory());
 

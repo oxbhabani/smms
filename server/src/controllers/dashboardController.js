@@ -1,5 +1,10 @@
+// Handles dashboard statistics
+
 const dashboardService = require('../services/dashboardService');
 
+// @desc   Get dashboard stats (counts, summaries)
+// @route  GET /api/dashboard
+// @access Private
 const getStats = async (req, res) => {
   try {
     const stats = await dashboardService.getStats();

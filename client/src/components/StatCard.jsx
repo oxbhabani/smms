@@ -1,6 +1,8 @@
+// Displays a single metric with an icon, label, and numeric value
 export default function StatCard({ title, value, icon: Icon, color = 'bg-indigo-500' }) {
   return (
     <div className="flex items-center gap-4 bg-white rounded-lg shadow p-5">
+      {/* Coloured circle with the icon inside */}
       <div className={`flex items-center justify-center w-12 h-12 rounded-full ${color} text-white`}>
         {Icon && <Icon className="text-xl" />}
       </div>

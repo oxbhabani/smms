@@ -5,6 +5,7 @@ import MainLayout from '../layouts/MainLayout';
 import StatCard from '../components/StatCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+// Dashboard — shows overview stats for machines, work orders, and maintenance
 export default function DashboardPage() {
   const { data: stats, loading } = useFetch(() => getDashboardStats());
 
@@ -16,6 +17,7 @@ export default function DashboardPage() {
     );
   }
 
+  // Map stats into card configs — each card shows a label, number, icon, and color
   const cards = [
     { title: 'Total Machines', value: stats?.totalMachines ?? 0, icon: FiTool, color: 'bg-indigo-500' },
     { title: 'Under Maintenance', value: stats?.underMaintenance ?? 0, icon: FiTool, color: 'bg-yellow-500' },

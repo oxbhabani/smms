@@ -29,18 +29,20 @@ const STATUS_OPTIONS = [
 
 const formatDate = (date) => (date ? new Date(date).toLocaleDateString() : '-');
 
+// Work order list — search, filter, view, and delete maintenance work orders
 export default function WorkOrderListPage() {
   const { user } = useAuth();
   const [workOrders, setWorkOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [priority, setPriority] = useState('');
-  const [status, setStatus] = useState('');
+  const [search, setSearch] = useState('');       // search term
+  const [priority, setPriority] = useState('');   // priority filter
+  const [status, setStatus] = useState('');       // status filter
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
-  const isAdmin = user?.role === 'Admin';
+  const isAdmin = user?.role === 'Admin';  // only admins can delete
 
+  // Fetch work orders with optional search/filter query params
   const fetchWorkOrders = useCallback(async () => {
     setLoading(true);
     try {
@@ -117,6 +119,7 @@ export default function WorkOrderListPage() {
           >
             <FiEye size={16} />
           </Link>
+          {/* Only admins see the delete button */}
           {isAdmin && (
             <button
               onClick={() => handleDeleteClick(row)}

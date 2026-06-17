@@ -5,12 +5,13 @@ import { createWorkOrder, getMachines, getUsers } from '../services/api';
 import MainLayout from '../layouts/MainLayout';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+// Create Work Order — form to create a new maintenance work order
 export default function CreateWorkOrderPage() {
   const navigate = useNavigate();
-  const [machines, setMachines] = useState([]);
-  const [technicians, setTechnicians] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [machines, setMachines] = useState([]);       // machine dropdown options
+  const [technicians, setTechnicians] = useState([]); // technician assignment options
+  const [loading, setLoading] = useState(true);        // loading dropdown data
+  const [saving, setSaving] = useState(false);         // disables submit during API call
   const [form, setForm] = useState({
     title: '',
     description: '',
@@ -19,6 +20,7 @@ export default function CreateWorkOrderPage() {
     assignedTo: '',
   });
 
+  // On mount: load machines and technicians in parallel for dropdowns
   const fetchData = useCallback(async () => {
     try {
       const [machinesRes, usersRes] = await Promise.all([
@@ -42,6 +44,7 @@ export default function CreateWorkOrderPage() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // On submit: create work order via API, redirect to list
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);

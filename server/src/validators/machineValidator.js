@@ -1,5 +1,7 @@
+// Validation helpers for machine routes — ensures required fields and valid statuses
 const VALID_STATUSES = ['Running', 'Maintenance', 'Breakdown', 'Offline'];
 
+// Validates all required fields for creating a new machine
 const validateCreateMachine = ({ machineId, name, department, manufacturer, installationDate, status }) => {
   const errors = [];
 
@@ -25,6 +27,7 @@ const validateCreateMachine = ({ machineId, name, department, manufacturer, inst
     errors.push({ field: 'installationDate', message: 'Installation date must be a valid date' });
   }
 
+  // Status is optional on create — only validate if provided
   if (status !== undefined && status !== null && status !== '') {
     if (!VALID_STATUSES.includes(status)) {
       errors.push({ field: 'status', message: `Status must be one of: ${VALID_STATUSES.join(', ')}` });
@@ -34,6 +37,7 @@ const validateCreateMachine = ({ machineId, name, department, manufacturer, inst
   return { errors };
 };
 
+// Validates fields for updating a machine — all fields are optional here
 const validateUpdateMachine = ({ machineId, name, department, manufacturer, installationDate, status }) => {
   const errors = [];
 
